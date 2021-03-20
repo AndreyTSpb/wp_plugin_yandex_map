@@ -7,7 +7,7 @@ ymaps.ready(init_yandex_map);
     function init_yandex_map(){
           // Создание карты.
           let myMap = new ymaps.Map("yandex-map", {
-              center: [59.936051, 30.316519],
+              center: [+mapObj.data_x, +mapObj.data_y],
               zoom: +mapObj.zoom
           }),
           yellowCollection = new ymaps.GeoObjectCollection(null, {
@@ -17,7 +17,7 @@ ymaps.ready(init_yandex_map);
               // Своё изображение иконки метки.
               iconImageHref: mapObj.icon,
               // Размеры метки.
-              iconImageSize: [55, 50],
+              iconImageSize: mapObj.size_icon,
               // Смещение левого верхнего угла иконки относительно
               // её "ножки" (точки привязки).
               iconImageOffset: [-5, -38]
