@@ -31,6 +31,15 @@ define( 'WPYMA_PLUGIN_URL',
 
 
 if(is_admin()){
+    /**
+     * Для работы с БД
+     */
+    require_once WPYMA_PLUGIN_DIR.'/admin/base_for_work_with_db.php';
+     
+    /**
+     * Проверка есть ли в базе данных таблица для площадок
+     */
+    require_once WPYMA_PLUGIN_DIR.'/admin/create_db.php';
     require_once WPYMA_PLUGIN_DIR.'/admin/admin.php';
     //echo WPYMA_PLUGIN_DIR.'/admin/admin.php';
 }else{

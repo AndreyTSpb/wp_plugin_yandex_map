@@ -17,6 +17,9 @@
 
     add_action( 'admin_menu', 'wpyma_main_menu' );
 
+    /**
+     * Подменю
+     */
     function wpyma_submenu1() {	
         add_submenu_page(
             'wpyma_main_menu',					//родительское меню настроек        
@@ -29,7 +32,19 @@
     }
     add_action('admin_menu', 'wpyma_submenu1');
 
- 
+/**
+ * Добавление меток на карту
+ */
+    function wpyma_main_menu_func(){
+        echo '<div class="wrap">';
+        echo "main page";
+        echo '</div>';
+    }
+
+
+ /**
+  * НАСТРОЙКИ ПЛАГИНА
+  */
     /* Вывод страницы настроек плагина */
     function wpyma_options_page() {
         echo '<nodiv class="wrap">';
@@ -127,56 +142,56 @@
         }
     }
 
-/* вывод полей */
+    /* вывод полей */
 
-/**
- * поле для ввода API KEY яндекс
- */
+    /**
+     * поле для ввода API KEY яндекс
+     */
     function wpyma_apikey_field(){
         $options = get_option('wpyma_options');
         $showApiKey = (isset($options['wpyma_apikey'])) ? 'value='.$options['wpyma_apikey'] : "placeholder = 'УКАЖИТЕ СВОЙ КЛЮЧ...'";
         echo '<input type="text" id="wpyma_apikey_template" name="wpyma_options[wpyma_apikey]"'.$showApiKey.'>';
     }
-/**
- * Поле для ввода координат центра карты
- */
+    /**
+     * Поле для ввода координат центра карты
+     */
     function wpyma_coords_center_field(){
         $options = get_option('wpyma_options');
         $showCoords = (isset($options['wpyma_coords_center'])) ? 'value='.$options['wpyma_coords_center'] : "placeholder = 'Укажите координаты центра каты'";
         echo '<input type="text" id="wpyma_coords_center_template" name="wpyma_options[wpyma_coords_center]"'.$showCoords.'>';
     }
 
-/**
- * Поле для ввода размера ярлычка 
- */
+    /**
+     * Поле для ввода размера ярлычка 
+     */
     function wpyma_slug_size_field(){
         $options = get_option('wpyma_options');
         $showSlugSize = (isset($options['wpyma_slug_size'])) ? 'value='.$options['wpyma_slug_size'] : "placeholder = 'Укажите размер ярлычка на карте'";
         echo '<input type="text" id="wpyma_slug_size_template" name="wpyma_options[wpyma_slug_size]"'.$showSlugSize.'>';
     }
 
-/**
- * Поле для ввода размера ярлычка 
- */
-function wpyma_zoom_field(){
-    $options = get_option('wpyma_options');
-    $showZoom = (isset($options['wpyma_zoom'])) ? 'value='.$options['wpyma_zoom'] : "placeholder = ''";
-    echo '<input type="text" id="wpyma_zoom_template" name="wpyma_options[wpyma_zoom]"'.$showZoom.'>';
-}
+    /**
+     * Поле для ввода размера ярлычка 
+     */
+    function wpyma_zoom_field(){
+        $options = get_option('wpyma_options');
+        $showZoom = (isset($options['wpyma_zoom'])) ? 'value='.$options['wpyma_zoom'] : "placeholder = ''";
+        echo '<input type="text" id="wpyma_zoom_template" name="wpyma_options[wpyma_zoom]"'.$showZoom.'>';
+    }
 
 
-/**
- * Поле для загрузки картинки
- */
+    /**
+     * Поле для загрузки картинки
+     */
     function wpyma_slug_field(){
         $options  = get_option('wpyma_options');
         $showSlug = (isset($options['wpyma_slug'])) ?  'value='.$options['wpyma_slug'] : "placeholder = 'Укажите картинку'";
         echo '<input type="file" id="wpyma_slug_template" name="wpyma_slug" '.$showSlug.'>';
     }
 
-/**
- * Валидация введенных данных
- */
+    /**
+     * Валидация введенных данных
+     */
     function wpyma_options_sanitize($options){
         /*
         Array ( 
