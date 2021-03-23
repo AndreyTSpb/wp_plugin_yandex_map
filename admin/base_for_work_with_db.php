@@ -1,5 +1,4 @@
 <?php
-
 class BaseForWorkWithDB{
     protected $table_name; //имя таблицы с префиксом wp
     protected $db_connect; //подключение к бд

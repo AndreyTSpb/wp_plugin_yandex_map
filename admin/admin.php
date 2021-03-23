@@ -17,10 +17,26 @@
 
     add_action( 'admin_menu', 'wpyma_main_menu' );
 
+
     /**
-     * Подменю
+     * Подменю добавить площадку
      */
-    function wpyma_submenu1() {	
+    function wpyma_submenu_add_new(){
+        add_submenu_page(
+            'wpyma_main_menu',					//родительское меню настроек        
+            __( 'WP Yandex Map', 'textdomain' ),//название (title)
+            'Добавить',						    //название пункта меню
+            'manage_options',					//уровень доступа
+            'wpyma_add_new',					//уникальное название этого меню (slug) или имя файла с функциями вывода содержимого меню
+            'wpyma_add_new_page'				//функция для вывода контента страницы с опциями
+        );
+    }
+    add_action( 'admin_menu', 'wpyma_submenu_add_new' );
+
+    /**
+     * Подменю Настройки
+     */
+    function wpyma_submenu_options() {	
         add_submenu_page(
             'wpyma_main_menu',					//родительское меню настроек        
             __( 'WP Yandex Map', 'textdomain' ),		//название (title)
@@ -30,7 +46,7 @@
             'wpyma_options_page'				//функция для вывода контента страницы с опциями
         );
     }
-    add_action('admin_menu', 'wpyma_submenu1');
+    add_action('admin_menu', 'wpyma_submenu_options');
 
 /**
  * Добавление меток на карту
@@ -38,8 +54,44 @@
     function wpyma_main_menu_func(){
         echo '<div class="wrap">';
         echo "main page";
+        echo wpyma_main_html();
         echo '</div>';
     }
+
+    /**
+     * Вывод таблицы с списком площадок
+     */
+    function wpyma_main_html(){
+        require_once 'view_table.php';
+        $Table = new WPYMA_View_Table();
+        $Table -> prepare_items();
+        return $Table -> display();
+    }
+
+    /**
+     * Страница с меткой
+     */
+    function wpyma_add_new_page(){
+        $url_post = WPYMA_PLUGIN_URL.'/admin/post.php';
+        $id_row = (int)$_GET['id_row'];
+
+        if(isset($id_row) AND !empty($id_row)){
+            /**
+             * если есть айди значит редактируем
+             */
+            include 'select_db.php';
+            $rez = new Select_db();
+            print_r($rez->get_one_row($id_row));
+            extract($rez->get_one_row($id_row));           
+        }
+        /**
+         * Иначе создаем новую запись
+         */
+        ob_start();
+        include WPYMA_PLUGIN_DIR.'/admin/contents/form.php';
+        echo ob_get_clean();
+    }
+
 
 
  /**
@@ -47,18 +99,20 @@
   */
     /* Вывод страницы настроек плагина */
     function wpyma_options_page() {
-        echo '<nodiv class="wrap">';
-        screen_icon();                                    
+        /* регистрация настроек в системе */
+        add_action('admin_init', wpyma_options_page_settings_init());
+
+        echo '<div class="wrap">';                             
         echo '<form id="wpyma_options" action="options.php" method="post" enctype="multipart/form-data">'; 
         do_settings_sections('wpyma_options');		//вывод блоков с полями формы для page (page из add_settings_section)               
         settings_fields('wpyma_options');	//выводит на экран скрытые поля input (группа опций из register_setting)                 
         submit_button();                                  
         echo '</form>';
-        echo '</nodiv>';
+        echo '</div>';
     }
 
-    /* регистрация настроек в системе */
-    function wpyma_settings_init() {
+    /* регистрация настроек options_page в системе */
+    function wpyma_options_page_settings_init() {
 
         register_setting(
             'wpyma_options',			//группа опций (уникальное имя) используется в атрибуте name поля поля в форме ввода данных.
@@ -125,8 +179,6 @@
             'wpyma_options'
         );
     }
-    
-    add_action('admin_init', 'wpyma_settings_init');
 
     /* описание */
     function wpyma_options_desc() {
@@ -178,7 +230,6 @@
         $showZoom = (isset($options['wpyma_zoom'])) ? 'value='.$options['wpyma_zoom'] : "placeholder = ''";
         echo '<input type="text" id="wpyma_zoom_template" name="wpyma_options[wpyma_zoom]"'.$showZoom.'>';
     }
-
 
     /**
      * Поле для загрузки картинки

@@ -11,6 +11,8 @@
  *
  * @package Yandex Maps Api
  */
+defined('ABSPATH') or die('No script kiddies please!');
+
 define( 'WPYMA_VERSION', '1.0.1' );
 
 define( 'WPYMA_REQUIRED_WP_VERSION', '5.5' );
@@ -40,8 +42,10 @@ if(is_admin()){
      * Проверка есть ли в базе данных таблица для площадок
      */
     require_once WPYMA_PLUGIN_DIR.'/admin/create_db.php';
+    /**
+     * Переход на страницу админки
+     */
     require_once WPYMA_PLUGIN_DIR.'/admin/admin.php';
-    //echo WPYMA_PLUGIN_DIR.'/admin/admin.php';
 }else{
     $yandex_maps_array = array($atts);
 

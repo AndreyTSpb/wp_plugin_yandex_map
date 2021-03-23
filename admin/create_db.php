@@ -25,12 +25,15 @@ class Wpyma_Create_Db extends BaseForWorkWithDB{
     private function wpyma_create_table(){
         $sql = "CREATE TABLE " . $this->table_name . " (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time bigint(11) DEFAULT '0' NOT NULL,
-            name tinytext NOT NULL,
-            text text NOT NULL,
+            coord_x float NOT NULL,
+            coord_y float NOT NULL,
+            hint_content text NOT NULL,
+            balloon_content_header text NOT NULL,
+            balloon_content_body text NOT NULL,
+            balloon_content_footer text NOT NULL,
             url VARCHAR(55) NOT NULL,
             UNIQUE KEY id (id)
-          );";
+          );";  
       require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
       dbDelta($sql);
     }
