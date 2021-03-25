@@ -52,3 +52,4 @@ class Wpyma_Update_Db extends BaseForWorkWithDB{
          return $rez;
      }
 }
+?>

@@ -1,4 +1,3 @@
-
 <?php
 class Wpyma_Create_Db extends BaseForWorkWithDB{
     
@@ -39,3 +38,4 @@ class Wpyma_Create_Db extends BaseForWorkWithDB{
     }
 }
 $obj = new Wpyma_Create_Db();
+?>

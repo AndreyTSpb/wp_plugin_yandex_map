@@ -15,4 +15,5 @@ class BaseForWorkWithDB{
     private function wpyma_get_wpdb_prefix () {
         $this->table_name = $this->db_connect->prefix . "wpyma_list_locations";
     }
-} 
+}
+?> 

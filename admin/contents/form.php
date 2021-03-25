@@ -4,12 +4,16 @@
     <h1 class="wp-heading-inline"><?=(isset($title))?'Редактируем: '.$title: 'Добавить новую метку'?></h1>
     <hr class="wp-header-end">
     <form method="POST" action="<?=$url_post?>">
-        <input type="hidden" name="id_row" value = "<?=(isset($id_row)?$id_row:"");?>">
+        <input type="hidden" name="id_row" value = "<?=(isset($id_row) AND !empty($id_row))?$id_row:"";?>">
         <fieldset>
             <legend>
                  Внесение данных для меток на карте.</br>
                  Данные можно добавлять c html  тегами, чтобы сформировать свое оформление. 
             </legend>
+            <?php if(isset($id_row) AND !empty($id_row)):?>
+                <div id="yandex-map-preview" style="width:300px; height:300px;">
+                </div>
+            <?php endif;?>
             <table class="form-table">
                 <tbody>
                     <tr>
@@ -20,7 +24,6 @@
                             <input type="text" id="coord_x" name="coord_x" class="code" size="20" value="<?=(isset($coord_x) ? $coord_x : '');?>" >
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label for="coord_y">Координаты по оси Y</label>
@@ -38,7 +41,6 @@
                             <input type="text" id="hintContent" name="hintContent" class="code" size="70" value="<?=(isset($title) ? $title : '');?>">
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label for="balloonContentHeader">Загаловок баллуна</label>
@@ -65,7 +67,6 @@
                             ?>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label for="balloonContentBody">Тело баллуна</label>
@@ -92,7 +93,6 @@
                             ?>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label for="balloonContentFooter">Подвал баллуна</label>
@@ -129,3 +129,4 @@
         </fieldset>
     </form>
 </div>
+<?php?>

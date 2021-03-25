@@ -47,3 +47,4 @@ class Wpyma_Insert extends BaseForWorkWithDB{
         return $this->db_connect->insert_id;
     }
 }
+?>
