@@ -20,4 +20,3 @@ class Select_db extends BaseForWorkWithDB{
         return(compact('title', 'coord_x', 'coord_y', 'balloonContentHeader', 'balloonContentBody', 'balloonContentFooter'));
     }
 }
-?>
